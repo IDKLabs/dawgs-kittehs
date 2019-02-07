@@ -4,14 +4,14 @@ export const PetTypeEnum = Object.freeze({
 });
 
 export const DogBreedEnum = Object.freeze({
-  'Labrador': 'Labrador',
+  'Labrador': 'Labrador Retriever',
   'Great Dane': 'Great Dane',
   'Bernese Mountain Dog': 'Bernese Mountain Dog',
   'Siberian Husky': 'Siberian Husky',
   'Rottweiler': 'Rottweiler',
   'Australian Shepherd': 'Australian Shepherd',
-  'Dachshund': 'Dachshund',
-  'Bulldog': 'Bulldog',
+  'Dalmation': 'Dalmatian',
+  'Bulldog': 'French Bulldog',
   'Boston Terrier': 'Boston Terrier',
   'Yorkshire Terrier': 'Yorkshire Terrier',
   'Cavalier King Charles Spaniel': 'Cavalier King Charles Spaniel',
@@ -19,11 +19,11 @@ export const DogBreedEnum = Object.freeze({
   'Doberman Pinscher': 'Doberman Pinscher',
   'Boxer': 'Boxer',
   'Brittany': 'Brittany',
-  'Pointer': 'Pointer',
+  'Pointer': 'German Shorthaired Pointer',
   'Golden Retriever': 'Golden Retriever',
   'German Shepherd': 'German Shepherd',
-  'Corgi': 'Corgi',
-  'Poodle': 'Poodle',
+  'Corgi': 'Pembroke Welsh Corgi',
+  'Pug': 'Pug',
 });
 
 export const CatBreedEnum = Object.freeze({
