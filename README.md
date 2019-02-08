@@ -28,7 +28,6 @@ You've been hired by Dawgs and Kittehs Inc. to improve their web application. Th
 
 They have provided both the frontent (a React app) and a backend API. You'll need to use your imagination - we've simulated an API with some javascript in the `api` folder. Your "database" is a javascript Array in `src/api/data.js` *We fully expect that you will modify the code in the `api` folder, but please do not modify the `data.js file`*
 
-Task 1: 
 Improve the Dawgs and Kittehs web app with the following new features:
  - <strong>*required*</strong> Pagination (any style you are most comfortable with - eg. Previous/Next/Page # or Inifite scroll/Load More)
  - Sort by `name` or `breed`
