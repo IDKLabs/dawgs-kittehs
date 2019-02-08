@@ -24,6 +24,11 @@ class App extends Component {
 
     return (
       <div className="App">
+        <div className="tableheader">
+          <div className="type">Type</div>
+          <div className="name">Name</div>
+          <div className="breed">Breed</div>
+        </div>
         { pets.map(({ id, ...pet }) => <PetListItem key={id} pet={pet} />) }
       </div>
     );
