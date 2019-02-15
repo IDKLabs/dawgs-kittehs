@@ -29,15 +29,15 @@ You've been hired by Dawgs and Kittehs Inc. to improve their web application. Th
 They have provided both the frontend (a React app) and a backend API. You'll need to use your imagination - we've simulated an API with some javascript in the `api` folder. Your "database" is a javascript Array in `src/api/data.js` *We fully expect that you will modify the code in the `api` folder, but please do not modify the `data.js file`*
 
 Improve the Dawgs and Kittehs web app with the following new features:
- - <strong>*required*</strong> Pagination (any style you are most comfortable with - eg. Previous/Next/Page # or Inifite scroll/Load More)
+ - <strong>*required*</strong> Pagination (any style you are most comfortable with - eg. Previous/Next/Page # or Inifite scroll/Load More) *Please do not install additional libraries*
  - Sort by `name` or `breed`
- - Filter by Pet Type (Cat or Dog)
+ - Filter by `petType`
  - Handle errors from the API gracefully (see commented code in `src/api/index.js` to simulate errors)
  - Click on any pet breed to display information about the breed
    - You'll have a list of pets but no breed information, so you'll need to use an api to fetch information about a specific breed. Start by signing up for an api key [here](https://thedogapi.com/). View documentation [here](https://documenter.getpostman.com/view/4016432/the-dog-api/RW81vZ4Z).
 
 ### Important details
-- You should not need to install any additional packages. The [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) package can be used to make network requests, and anything else you need will be included.
+- You should not install any additional packages. The [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) package can be used to make network requests, and anything else you need will be included.
 
 ### Instructions
 1. Please install `yarn`
