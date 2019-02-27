@@ -20,7 +20,7 @@ This project assesses some of the practical skills we are looking for in a [Full
 
 ### Your Assignment
 
-You've been hired by Dawgs and Kittehs Inc. to improve their web application. They currently have a database of pets with `name`, `breed`, and `petType`, and a simple site that prints the list. They've provided you with the frontend (a React app) and an API simulated with some javascript and sample data. Use your imagination and assume the methods in `api/index.js` will fetch from an actual database eventually.
+You've been hired by Dawgs and Kittehs Inc. to improve their web application. They currently have a database of pets with `name`, `breed`, and `petType`, and a simple site that prints the list. They've provided you with the frontend (a React app) and an API simulated with some javascript and sample data. Use your imagination and assume the methods in `api/index.js` will fetch from an actual database eventually. <strong>*Please modify the API to accomplish the following tasks.*</strong>
 
 Dawgs and Kittehs Inc. have requested you add the following new features within the allotted time:
 
