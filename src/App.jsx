@@ -1,11 +1,11 @@
 import _ from "lodash";
 import React, { Component } from "react";
 import "./app.scss";
-import { getPets, getPetBatch } from "./api";
+import { getPetBatch } from "./api";
 import PetListItem from "./PetListItem.jsx";
 
 import InfiniteScroll from "react-infinite-scroller";
-import { List, message, Avatar, Spin } from "antd";
+import { Button, List, message, Avatar, Spin, notification } from "antd";
 import { exists } from "fs";
 
 class App extends Component {
@@ -27,13 +27,19 @@ class App extends Component {
   }
 
   componentDidMount = async () => {
-    const pets = await getPetBatch(10, 0);
-    this.setState({ pets, loading: false });
+    try {
+      // Load first 20 pets
+      const pets = await getPetBatch(20, 0);
+      this.setState({ pets, loading: false });
+    } catch (err) {
+      // Handle error
+      this.openNotification();
+    }
   };
 
   handleInfiniteOnLoad = async page => {
     console.log("Page number:", page);
-    //Limit loads (for now)
+    //Limit loads (temporary)
     // const totalLoads = this.state.totalLoads + 1;
     // this.setState({ totalLoads });
 
@@ -56,9 +62,40 @@ class App extends Component {
       return;
     }
     // Get a new batch
-    const newBatch = await getPetBatch(10, page);
-    pets = [...pets, ...newBatch];
-    this.setState({ pets, loading: false });
+    try {
+      const newBatch = await getPetBatch(20, page);
+      pets = [...pets, ...newBatch];
+      this.setState({ pets, loading: false });
+    } catch (err) {
+      // Handle error
+      this.openNotification();
+    }
+  };
+
+  closeNotification = key => {
+    notification.close(key);
+    // Go back to loading
+    this.setState({ loading: false });
+  };
+
+  openNotification = () => {
+    const key = `open${Date.now()}`;
+    const btn = (
+      <Button
+        type="primary"
+        size="small"
+        onClick={() => this.closeNotification(key)}
+      >
+        Try Again
+      </Button>
+    );
+    notification.open({
+      message: "Error",
+      description: "We had trouble loading more pets.",
+      btn,
+      key,
+      duration: 0
+    });
   };
 
   render() {
@@ -81,12 +118,6 @@ class App extends Component {
           {pets.map(({ id, ...pet }) => (
             <PetListItem key={id} pet={pet} />
           ))}
-          {/* Loading message */}
-          {this.state.loading && this.state.hasMore && (
-            <div className="demo-loading-container">
-              <Spin />
-            </div>
-          )}
         </InfiniteScroll>
       </div>
     );
