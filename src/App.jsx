@@ -1,24 +1,12 @@
-import _ from "lodash";
 import React, { Component } from "react";
 import "./app.scss";
 import { getPetBatch } from "./api";
 import PetListItem from "./PetListItem.jsx";
 import TableHeader from "./TableHeader.jsx";
-
 import InfiniteScroll from "react-infinite-scroller";
-import { Button, List, message, Avatar, Spin, notification } from "antd";
-import { exists } from "fs";
+import { Button, message, notification } from "antd";
 
 class App extends Component {
-  state = {
-    pets: [],
-    loading: true,
-    hasMore: true,
-    page: 0,
-    sortBy: null,
-    filterBy: null
-  };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +58,6 @@ class App extends Component {
       this.setState({ pets, page: newPage, loading: false });
     } catch (err) {
       // Handle error
-      console.log(err);
       this.openNotification();
     }
   };
@@ -94,7 +81,7 @@ class App extends Component {
     );
     notification.open({
       message: "Error",
-      description: "We had trouble loading more pets.",
+      description: "Having trouble loading more pets.",
       btn,
       key,
       duration: 0

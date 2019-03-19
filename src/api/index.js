@@ -1,6 +1,5 @@
 import _ from "lodash";
 import data from "./data.js";
-import { PetTypeEnum, BreedEnum } from "./enums.js";
 
 export const getPetBatch = async (
   batchSize,
