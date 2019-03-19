@@ -15,7 +15,8 @@ class App extends Component {
     loading: true,
     hasMore: true,
     page: 0,
-    sortBy: null
+    sortBy: null,
+    filterBy: null
   };
 
   constructor(props) {
@@ -25,7 +26,8 @@ class App extends Component {
       loading: true,
       hasMore: true,
       page: 0,
-      sortBy: null
+      sortBy: null,
+      filterBy: null
     };
   }
 
@@ -60,13 +62,15 @@ class App extends Component {
       const newBatch = await getPetBatch(
         20,
         this.state.page,
-        this.state.sortBy
+        this.state.sortBy,
+        this.state.filterBy
       );
       pets = [...pets, ...newBatch];
       const newPage = this.state.page + 1;
       this.setState({ pets, page: newPage, loading: false });
     } catch (err) {
       // Handle error
+      console.log(err);
       this.openNotification();
     }
   };
@@ -105,6 +109,20 @@ class App extends Component {
     this.setState({ pets: [], page: 0, sortBy: "breed" });
   };
 
+  filterDog = type => {
+    this.setState({
+      pets: [],
+      page: 0,
+      loading: false,
+      sortBy: null,
+      filterBy: "dog"
+    });
+  };
+
+  filterCat = () => {
+    this.setState({ pets: [], page: 0, sortBy: null, filterBy: "cat" });
+  };
+
   render() {
     const { pets } = this.state;
 
@@ -119,6 +137,8 @@ class App extends Component {
           <TableHeader
             nameSort={this.initiateNameSort}
             breedSort={this.initiateBreedSort}
+            filterDog={this.filterDog}
+            filterCat={this.filterCat}
           />
 
           {pets.map(({ id, ...pet }) => (

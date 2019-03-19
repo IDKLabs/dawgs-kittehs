@@ -1,17 +1,6 @@
 import _ from "lodash";
 import data from "./data.js";
-
-// export const getPets = async _args => {
-//   const pets = data;
-
-//   // Simulates an async api
-//   await new Promise(resolve => setTimeout(resolve, _.random(300, 1500)));
-
-//   // Simulates receiving an error from the API. Please uncomment to test handling errors client-side.
-//   // if (_.random(0, 10) === 10) throw new Error('☹️');
-
-//   return pets;
-// };
+import { PetTypeEnum, BreedEnum } from "./enums.js";
 
 export const getPetBatch = async (
   batchSize,
@@ -24,6 +13,7 @@ export const getPetBatch = async (
   await new Promise(resolve => setTimeout(resolve, _.random(300, 1500)));
   if (_.random(0, 10) === 10) throw new Error("☹️");
 
+  // Sorting
   if (sortBy === "name") {
     pets.sort(function(a, b) {
       var nameA = a.name.toUpperCase();
@@ -49,6 +39,13 @@ export const getPetBatch = async (
       return 0;
     });
   }
+
+  // Filtering
+  // if (filterBy === "dog") {
+  //   pets = pets.filter(pet => pet.petType === PetTypeEnum.DOG);
+  // } else if (filterBy === "cat") {
+  //   pets = pets.filter(pet => pet.petType === PetTypeEnum.CAT);
+  // }
 
   const start = pagesLoaded * batchSize;
   console.log("Page", pagesLoaded);
