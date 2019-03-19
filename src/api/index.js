@@ -41,8 +41,6 @@ export const getPetBatch = async (
   }
 
   const start = pagesLoaded * batchSize;
-  console.log("Page", pagesLoaded);
-  console.log("returning pets", start, "through", start + batchSize);
 
   if (start >= pets.length || start + batchSize >= pets.length) {
     return { response: {}, status: false };
