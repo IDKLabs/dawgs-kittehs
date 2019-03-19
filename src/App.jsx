@@ -22,7 +22,8 @@ class App extends Component {
   componentDidMount = async () => {
     try {
       // Load first 20 pets
-      const pets = await getPetBatch(20, 0);
+      const batch = await getPetBatch(20, 0);
+      const pets = batch.response;
       this.setState({ pets, page: 1, loading: false });
     } catch (err) {
       // Handle error
@@ -36,15 +37,6 @@ class App extends Component {
     this.setState({
       loading: true
     });
-    // Check if done loading everything
-    if (pets.length >= 1794) {
-      message.warning("Infinite List loaded all");
-      this.setState({
-        hasMore: false,
-        loading: false
-      });
-      return;
-    }
     // Get a new batch
     try {
       const newBatch = await getPetBatch(
@@ -53,11 +45,19 @@ class App extends Component {
         this.state.sortBy,
         this.state.filterBy
       );
-      pets = [...pets, ...newBatch];
+      // Done displaying
+      if (newBatch.status === false) {
+        message.warning("That's all!");
+        this.setState({
+          hasMore: false,
+          loading: false
+        });
+        return;
+      }
+      pets = [...pets, ...newBatch.response];
       const newPage = this.state.page + 1;
       this.setState({ pets, page: newPage, loading: false });
     } catch (err) {
-      // Handle error
       this.openNotification();
     }
   };
@@ -89,17 +89,30 @@ class App extends Component {
   };
 
   initiateNameSort = () => {
-    this.setState({ pets: [], page: 0, sortBy: "name" });
+    this.setState({
+      pets: [],
+      page: 0,
+      hasMore: true,
+      loading: false,
+      sortBy: "name"
+    });
   };
 
   initiateBreedSort = () => {
-    this.setState({ pets: [], page: 0, sortBy: "breed" });
+    this.setState({
+      pets: [],
+      page: 0,
+      hasMore: true,
+      loading: false,
+      sortBy: "breed"
+    });
   };
 
   filterDog = type => {
     this.setState({
       pets: [],
       page: 0,
+      hasMore: true,
       loading: false,
       sortBy: null,
       filterBy: "dog"
@@ -107,7 +120,25 @@ class App extends Component {
   };
 
   filterCat = () => {
-    this.setState({ pets: [], page: 0, sortBy: null, filterBy: "cat" });
+    this.setState({
+      pets: [],
+      page: 0,
+      hasMore: true,
+      loading: false,
+      sortBy: null,
+      filterBy: "cat"
+    });
+  };
+
+  noFilter = () => {
+    this.setState({
+      pets: [],
+      page: 0,
+      hasMore: true,
+      loading: false,
+      sortBy: null,
+      filterBy: null
+    });
   };
 
   render() {
@@ -128,6 +159,7 @@ class App extends Component {
               breedSort={this.initiateBreedSort}
               filterDog={this.filterDog}
               filterCat={this.filterCat}
+              noFilter={this.noFilter}
             />
             {pets.map(({ id, ...pet }) => (
               <PetListItem key={id} pet={pet} />

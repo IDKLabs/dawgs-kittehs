@@ -6,8 +6,9 @@ class TableHeader extends Component {
   render() {
     const menu = (
       <Menu>
-        <Menu.Item onClick={this.props.filterDog}>dog</Menu.Item>
-        <Menu.Item onClick={this.props.filterCat}>cat</Menu.Item>
+        <Menu.Item onClick={this.props.filterDog}>🐶</Menu.Item>
+        <Menu.Item onClick={this.props.filterCat}>😼</Menu.Item>
+        <Menu.Item onClick={this.props.noFilter}>None</Menu.Item>
       </Menu>
     );
     return (

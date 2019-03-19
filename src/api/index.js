@@ -1,5 +1,6 @@
 import _ from "lodash";
 import data from "./data.js";
+import { PetTypeEnum } from "./enums.js";
 
 export const getPetBatch = async (
   batchSize,
@@ -8,7 +9,7 @@ export const getPetBatch = async (
   filterBy = null
 ) => {
   pagesLoaded = pagesLoaded || 0; // NaN -> 0
-  const pets = data; // comment on fetch/re-sort every time
+  const pets = data;
   await new Promise(resolve => setTimeout(resolve, _.random(300, 1500)));
   if (_.random(0, 10) === 10) throw new Error("☹️");
 
@@ -39,15 +40,21 @@ export const getPetBatch = async (
     });
   }
 
-  // Filtering
-  // if (filterBy === "dog") {
-  //   pets = pets.filter(pet => pet.petType === PetTypeEnum.DOG);
-  // } else if (filterBy === "cat") {
-  //   pets = pets.filter(pet => pet.petType === PetTypeEnum.CAT);
-  // }
-
   const start = pagesLoaded * batchSize;
   console.log("Page", pagesLoaded);
   console.log("returning pets", start, "through", start + batchSize);
-  return pets.slice(start, start + batchSize);
+
+  if (start >= pets.length || start + batchSize >= pets.length) {
+    return { response: {}, status: false };
+  }
+
+  // Filtering
+  if (filterBy === "dog") {
+    const dogs = pets.filter(pet => pet.petType === PetTypeEnum.DOG);
+    return { response: dogs.slice(start, start + batchSize), status: true };
+  } else if (filterBy === "cat") {
+    const cats = pets.filter(pet => pet.petType === PetTypeEnum.CAT);
+    return { response: cats.slice(start, start + batchSize), status: true };
+  }
+  return { response: pets.slice(start, start + batchSize), status: true };
 };
