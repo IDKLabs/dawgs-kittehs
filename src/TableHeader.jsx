@@ -12,13 +12,17 @@ class TableHeader extends Component {
     );
     return (
       <React.Fragment>
-        <Dropdown overlay={menu}>
+        <Dropdown className="sort-filter-buttons" overlay={menu}>
           <a className="ant-dropdown-link" href="#">
             Filter by <Icon type="down" />
           </a>
         </Dropdown>
-        <Button onClick={this.props.nameSort}>Sort by name</Button>
-        <Button onClick={this.props.breedSort}>Sort by breed</Button>
+        <Button className="sort-filter-buttons" onClick={this.props.nameSort}>
+          Sort by name
+        </Button>
+        <Button className="sort-filter-buttons" onClick={this.props.breedSort}>
+          Sort by breed
+        </Button>
         <div className="tableheader">
           <div className="type">Type</div>
           <div className="name">Name</div>
