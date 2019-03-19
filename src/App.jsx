@@ -127,25 +127,27 @@ class App extends Component {
     const { pets } = this.state;
 
     return (
-      <div className="infinite-container">
-        <InfiniteScroll
-          initialLoad={true}
-          pageStart={0}
-          loadMore={page => this.handleLoad(page)}
-          hasMore={!this.state.loading && this.state.hasMore}
-        >
-          <TableHeader
-            nameSort={this.initiateNameSort}
-            breedSort={this.initiateBreedSort}
-            filterDog={this.filterDog}
-            filterCat={this.filterCat}
-          />
-
-          {pets.map(({ id, ...pet }) => (
-            <PetListItem key={id} pet={pet} />
-          ))}
-        </InfiniteScroll>
-      </div>
+      <React.Fragment>
+        <h1>Dawgs and Kittehs</h1>
+        <div className="infinite-container">
+          <InfiniteScroll
+            initialLoad={true}
+            pageStart={0}
+            loadMore={page => this.handleLoad(page)}
+            hasMore={!this.state.loading && this.state.hasMore}
+          >
+            <TableHeader
+              nameSort={this.initiateNameSort}
+              breedSort={this.initiateBreedSort}
+              filterDog={this.filterDog}
+              filterCat={this.filterCat}
+            />
+            {pets.map(({ id, ...pet }) => (
+              <PetListItem key={id} pet={pet} />
+            ))}
+          </InfiniteScroll>
+        </div>
+      </React.Fragment>
     );
   }
 }
