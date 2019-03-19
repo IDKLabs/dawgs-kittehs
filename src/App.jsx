@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import "./app.scss";
 import { getPetBatch } from "./api";
 import PetListItem from "./PetListItem.jsx";
+import TableHeader from "./TableHeader.jsx";
 
 import InfiniteScroll from "react-infinite-scroller";
 import { Button, List, message, Avatar, Spin, notification } from "antd";
@@ -13,7 +14,8 @@ class App extends Component {
     pets: [],
     loading: true,
     hasMore: true,
-    totalLoads: 0
+    page: 0,
+    sortBy: null
   };
 
   constructor(props) {
@@ -22,7 +24,8 @@ class App extends Component {
       pets: [],
       loading: true,
       hasMore: true,
-      totalLoads: 0
+      page: 0,
+      sortBy: null
     };
   }
 
@@ -30,23 +33,14 @@ class App extends Component {
     try {
       // Load first 20 pets
       const pets = await getPetBatch(20, 0);
-      this.setState({ pets, loading: false });
+      this.setState({ pets, page: 1, loading: false });
     } catch (err) {
       // Handle error
       this.openNotification();
     }
   };
 
-  handleInfiniteOnLoad = async page => {
-    console.log("Page number:", page);
-    //Limit loads (temporary)
-    // const totalLoads = this.state.totalLoads + 1;
-    // this.setState({ totalLoads });
-
-    // if (this.state.totalLoads > 10) {
-    //   this.setState({ hasMore: false, loading: false });
-    //   return;
-    // }
+  handleLoad = async () => {
     // Prepare to load
     let pets = this.state.pets;
     this.setState({
@@ -63,9 +57,14 @@ class App extends Component {
     }
     // Get a new batch
     try {
-      const newBatch = await getPetBatch(20, page);
+      const newBatch = await getPetBatch(
+        20,
+        this.state.page,
+        this.state.sortBy
+      );
       pets = [...pets, ...newBatch];
-      this.setState({ pets, loading: false });
+      const newPage = this.state.page + 1;
+      this.setState({ pets, page: newPage, loading: false });
     } catch (err) {
       // Handle error
       this.openNotification();
@@ -98,23 +97,30 @@ class App extends Component {
     });
   };
 
+  initiateNameSort = () => {
+    this.setState({ pets: [], page: 0, sortBy: "name" });
+  };
+
+  initiateBreedSort = () => {
+    this.setState({ pets: [], page: 0, sortBy: "breed" });
+  };
+
   render() {
     const { pets } = this.state;
+
     return (
       <div className="infinite-container">
         <InfiniteScroll
           initialLoad={true}
           pageStart={0}
-          loadMore={page => this.handleInfiniteOnLoad(page)}
+          loadMore={page => this.handleLoad(page)}
           hasMore={!this.state.loading && this.state.hasMore}
         >
-          {/* Header */}
-          <div className="tableheader">
-            <div className="type">Type</div>
-            <div className="name">Name</div>
-            <div className="breed">Breed</div>
-          </div>
-          {/* List of pets */}
+          <TableHeader
+            nameSort={this.initiateNameSort}
+            breedSort={this.initiateBreedSort}
+          />
+
           {pets.map(({ id, ...pet }) => (
             <PetListItem key={id} pet={pet} />
           ))}

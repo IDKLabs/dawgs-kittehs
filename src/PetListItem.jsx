@@ -1,10 +1,10 @@
-import React from 'react';
-import { PetTypeEnum } from './api/enums.js';
+import React from "react";
+import { PetTypeEnum } from "./api/enums.js";
 
 const Icons = Object.freeze({
-  [PetTypeEnum.DOG]: '🐶',
-  [PetTypeEnum.CAT]: '😼',
-})
+  [PetTypeEnum.DOG]: "🐶",
+  [PetTypeEnum.CAT]: "😼"
+});
 
 export default ({ pet }) => (
   <div className="petitem">
